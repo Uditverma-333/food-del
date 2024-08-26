@@ -6,12 +6,21 @@ import { StoreContext } from '../../context/StoreContext';
 
 const Navbar = ({setShowLogin}) => {
     const [menu, setMenu] = useState("Home");
-    const {getTotalCartAmount, token, setToken} = useContext(StoreContext);
+    const {getTotalCartAmount, token, setToken, searchQuery, setSearchQuery} = useContext(StoreContext);
     const navigate = useNavigate();
     const logout = () => {
         localStorage.removeItem("token");
         setToken("");
         navigate("/");
+    }
+    const handleSearch = (e) => {
+        if (e.key === 'Enter') {
+            setSearchQuery(e.target.value); // Update search query in context
+            const foodSection = document.getElementById('food-display');
+            if (foodSection) {
+                foodSection.scrollIntoView({ behavior: 'smooth' }); // Scroll to the food section
+            }
+        }
     }
   
     return (
@@ -24,8 +33,18 @@ const Navbar = ({setShowLogin}) => {
             <a href='#footer' onClick={() => setMenu("Contact Us")} className={menu==="Contact Us"?"active":""}>Contact Us</a>
         </ul>
         <div className="navbar-right">
-            <img src={assets.search_icon} alt="" />
-            <div className="navbar-search-icon">
+            <div className="search-container">
+                <img src={assets.search_icon} alt="" />
+                <input
+                    type="text"
+                    placeholder="Search..."
+                    className="search-input"
+                    value={searchQuery}
+                    onChange={(e) => setSearchQuery(e.target.value)}
+                    onKeyUp={handleSearch} // Trigger search on Enter press
+                />
+            </div>
+            <div className="navbar-cart-icon">
                 <Link to="/cart"><img src={assets.basket_icon} alt="" /></Link>
                 <div className={getTotalCartAmount()===0?"":"dot"}></div>
             </div>
