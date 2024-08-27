@@ -32,8 +32,7 @@ const Navbar = ({setShowLogin}) => {
             <a href='#app-download' onClick={() => setMenu("Mobile App")} className={menu==="Mobile App"?"active":""}>Mobile App</a>
             <a href='#footer' onClick={() => setMenu("Contact Us")} className={menu==="Contact Us"?"active":""}>Contact Us</a>
         </ul>
-        <div className="navbar-right">
-            <div className="search-container">
+        <div className="search-container">
                 <img src={assets.search_icon} alt="" />
                 <input
                     type="text"
@@ -43,7 +42,8 @@ const Navbar = ({setShowLogin}) => {
                     onChange={(e) => setSearchQuery(e.target.value)}
                     onKeyUp={handleSearch} // Trigger search on Enter press
                 />
-            </div>
+        </div>
+        <div className="navbar-right">
             <div className="navbar-cart-icon">
                 <Link to="/cart"><img src={assets.basket_icon} alt="" /></Link>
                 <div className={getTotalCartAmount()===0?"":"dot"}></div>
