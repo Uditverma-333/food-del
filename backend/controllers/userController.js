@@ -16,7 +16,7 @@ const loginUser = async (req, res) => {
             return res.json({success:false, message:"Invalid credentials"})
         }
         const token = createToken(user._id);
-        res.json({success:true, token});
+        res.json({success:true, token, message:"Login Successful!"});
 
     } catch (error) {
         console.log(error);
@@ -59,7 +59,7 @@ const registerUser = async (req, res) => {
         });
         const user = await newUser.save();
         const token = createToken(user._id);
-        res.json({success: true, token});
+        res.json({success: true, token, message: "Account created!"});
     } catch (error) {
         console.log(error);
         res.json({success:false, message:"Error"})

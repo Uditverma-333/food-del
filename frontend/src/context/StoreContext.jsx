@@ -1,5 +1,6 @@
 import { createContext, useEffect, useState } from "react";
 import axios from "axios"
+import { toast } from "react-toastify";
 
 export const StoreContext = createContext(null);
 
@@ -9,12 +10,15 @@ const StoreContextProvider = (props) => {
     const [token, setToken] = useState("");
     const [food_list, setFoodList] = useState([]);
     const [searchQuery, setSearchQuery] = useState("");
+    const [searchTriggered, setSearchTriggered] = useState(false);
 
     const addToCart = async (itemId) => {
         if(!cartItems[itemId]) {
-            setCartItems((prev) => ({...prev, [itemId]:1}))
+            setCartItems((prev) => ({...prev, [itemId]:1}));
+            toast.success("Added to cart");
         } else {
-            setCartItems((prev) => ({...prev, [itemId]:prev[itemId]+1}))
+            setCartItems((prev) => ({...prev, [itemId]:prev[itemId]+1}));
+            toast.success("Added to cart");
         }
 
         if(token) {
@@ -26,6 +30,7 @@ const StoreContextProvider = (props) => {
         if(token) {
             await axios.post(url+"/api/cart/remove", {itemId}, {headers:{token}});
         }
+        toast.success("Removed from cart");
     }
 
     // useEffect(() => {
@@ -75,7 +80,9 @@ const StoreContextProvider = (props) => {
         token,
         setToken,
         searchQuery, 
-        setSearchQuery
+        setSearchQuery,
+        searchTriggered,
+        setSearchTriggered,
     }
     return (
         <StoreContext.Provider value={contextValue}>

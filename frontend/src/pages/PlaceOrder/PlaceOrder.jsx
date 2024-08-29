@@ -3,8 +3,9 @@ import './PlaceOrder.css'
 import { StoreContext } from '../../context/StoreContext'
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
+import { toast } from 'react-toastify';
 
-const PlaceOrder = () => {
+const PlaceOrder = ({setShowLogin}) => {
   const { getTotalCartAmount, token, food_list, cartItems, url } = useContext(StoreContext);
   const [data, setData] = useState({
     firstname: "",
@@ -53,8 +54,11 @@ const PlaceOrder = () => {
   useEffect(() => {
     if(!token) {
       navigate('/cart');
+      setShowLogin(true);
+      toast.error("You must be logged in!");
     } else if(getTotalCartAmount()===0) {
       navigate('/cart');
+      toast.error("Your cart is empty!");
     }
   }, [token]);
 
