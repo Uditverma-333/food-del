@@ -6,7 +6,7 @@ const stripe = new Stripe(process.env.STRIPE_SECRET_KEY);
 
 // Function to handle placing an order from the frontend
 const placeOrder = async (req, res) => {
-    const frontend_url = "http://localhost:5173";//if in future url changes remember to change the url here  // URL for redirection after payment
+    const frontend_url = "https://tomato-l35k.onrender.com";//if in future url changes remember to change the url here  // URL for redirection after payment
     try {
         // Creating a new order in the database
         const newOrder = new orderModel({
